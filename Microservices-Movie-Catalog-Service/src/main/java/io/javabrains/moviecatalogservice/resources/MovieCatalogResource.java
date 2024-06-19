@@ -27,13 +27,13 @@ public class MovieCatalogResource {
     public List<CatalogItem> getCatalog(@PathVariable String userId) {
 
         //hardcoding a bunch of responses
-        UserRating ratings = restTemplate.getForObject("http://localhost:8079/ratingsdata/users/foo" + userId, UserRating.class); //ParameterizedTypeReference<ResponseWrapper<E>> can also be used instead in the second parameter
+        UserRating ratings = restTemplate.getForObject("http://MICROSERVICES-RATINGS-DATA-SERVICE/ratingsdata/users/foo" + userId, UserRating.class); //ParameterizedTypeReference<ResponseWrapper<E>> can also be used instead in the second parameter
 
         //rest template prep
         return ratings.getUserRating().stream().map(rating -> {
                     //RestTemplate (older way)
                     //ideally, for each movie ID, call the movie info service and get details
-                    Movie movie = restTemplate.getForObject("http://localhost:8078/movies/" + rating.getMovieId(), Movie.class);
+                    Movie movie = restTemplate.getForObject("http://MICROSERVICES-MOVIE-INFO-SERVICE/movies/" + rating.getMovieId(), Movie.class);
 
                     //WebClient (newer way)
                     /*Movie movie = builder.build()
